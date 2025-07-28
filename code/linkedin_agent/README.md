@@ -58,16 +58,33 @@ python -m linkedin_agent
 
 ## 🏗️ Architecture
 
-```
-Input (Image + Prompt) 
-    ↓
-Image Analyzer (Mistral Medium 3)
-    ↓ 
-Author Agent (Llama 3.3 70B)
-    ↓
-Markdown Formatter
-    ↓
-LinkedIn Post Output
+```mermaid
+graph TD
+    A[🎯 User Input<br/>Image + Prompt] --> B[📊 Questionnaire Sub-Agent<br/>Style Preferences]
+    B --> C{🔍 Image Available?}
+    C -->|Yes| D[🖼️ Image Context Analyzer<br/>Vision-Language Model]
+    C -->|No| E[🏭 Industry Analyzer Sub-Agent<br/>Domain Classification]
+    D --> E
+    E --> F[🔍 Web Research Tool<br/>Trending Topics & Hashtags]
+    F --> G[✍️ Author Agent<br/>Content Generation]
+    G --> H[🎯 Critiquer Sub-Agent<br/>Quality Assessment]
+    H --> I{📈 Quality Score ≥ 7.5?}
+    I -->|No| J[🔄 Refinement Loop<br/>Iterative Improvement]
+    J --> G
+    I -->|Yes| K[📝 Markdown Formatter<br/>Final Output]
+    K --> L[🎉 LinkedIn Post Ready!]
+    
+    style A fill:#ff6b6b,stroke:#d63031,stroke-width:3px,color:#fff
+    style B fill:#74b9ff,stroke:#0984e3,stroke-width:2px,color:#fff
+    style D fill:#a29bfe,stroke:#6c5ce7,stroke-width:2px,color:#fff
+    style E fill:#fd79a8,stroke:#e84393,stroke-width:2px,color:#fff
+    style F fill:#fdcb6e,stroke:#e17055,stroke-width:2px,color:#fff
+    style G fill:#00b894,stroke:#00a085,stroke-width:2px,color:#fff
+    style H fill:#e17055,stroke:#d63031,stroke-width:2px,color:#fff
+    style I fill:#6c5ce7,stroke:#5f3dc4,stroke-width:2px,color:#fff
+    style J fill:#fd79a8,stroke:#e84393,stroke-width:2px,color:#fff
+    style K fill:#00cec9,stroke:#00b894,stroke-width:2px,color:#fff
+    style L fill:#00b894,stroke:#00a085,stroke-width:3px,color:#fff
 ```
 
 ## 📁 File Structure

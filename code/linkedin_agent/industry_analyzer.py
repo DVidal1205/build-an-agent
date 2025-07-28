@@ -36,36 +36,46 @@ async def industry_analyzer_agent(state: LinkedInAgentState, config: RunnableCon
     POST TYPE:
     {state.post_type}
     
-    INDUSTRY OPTIONS:
-    - software - Software development, programming, AI/ML, startups, SaaS, tech companies (NVIDIA, Google, etc.), gaming/entertainment tech
-    - finance - Banking, investment, fintech, accounting, trading, insurance  
-    - healthcare - Medicine, nursing, pharma, biotech, medical devices
-    - marketing - Digital marketing, advertising, branding, social media, content
-    - consulting - Management consulting, strategy, business advisory
-    - education - Teaching, training, e-learning, academic, educational tech
-    - manufacturing - Industrial, automotive, aerospace, supply chain
-    - retail - E-commerce, consumer goods, fashion, food & beverage
-    - real_estate - Property, construction, architecture, urban planning
-    - energy - Oil & gas, renewable energy, utilities, sustainability
-    - media - Journalism, entertainment, publishing, broadcasting
-    - nonprofit - NGO, social impact, volunteering, community work
-    - general_business - Generic business content, leadership, entrepreneurship (ONLY if none of the above clearly apply)
-    
-    INDUSTRY DETECTION HINTS:
-    - NVIDIA, gaming, Fortnite, AI/ML, programming, coding, DevOps, cloud, containers → software
-    - Banking, investing, trading, financial planning → finance
-    - Doctors, nurses, medical, healthcare, pharma → healthcare
-    - Marketing campaigns, branding, advertising → marketing
-    
-    INSTRUCTIONS:
-    1. Choose the SINGLE most relevant industry from the list above
-    2. Consider both the image content AND the user's prompt carefully
-    3. Look for specific company names, technologies, or industry keywords
-    4. If multiple industries apply, pick the most prominent one
-    5. Use "general_business" ONLY if no specific industry clearly fits
-    6. Respond with ONLY the industry name (e.g., "software", "finance", etc.)
-    
-    INDUSTRY:"""
+    You are an industry classification agent. Based on user content (text, images, or metadata), you must categorize the content into a single most relevant industry.
+
+AVAILABLE INDUSTRY OPTIONS:
+- software: Software development, web/app development, DevOps, AI/ML, cybersecurity, tech startups, SaaS, open source, gaming tech, entertainment tech (e.g., NVIDIA, Google, Epic Games)
+- finance: Banking, investing, venture capital, private equity, accounting, fintech, crypto/blockchain, insurance, hedge funds, trading
+- healthcare: Medicine, nursing, pharmaceuticals, biotech, medical research, public health, medical devices, hospitals
+- marketing: Digital marketing, SEO/SEM, social media strategy, influencer campaigns, advertising, branding, content creation
+- consulting: Management consulting, business strategy, operations, organizational design, transformation, business advisory
+- education: K–12, higher education, teaching, tutoring, curriculum design, e-learning, edtech platforms, academic research
+- manufacturing: Industrial production, mechanical/automotive/aerospace engineering, robotics, automation, logistics, supply chain
+- retail: E-commerce, merchandising, fashion, consumer goods, food & beverage, brick-and-mortar retail
+- real_estate: Property development, architecture, urban planning, commercial/residential real estate, construction, zoning
+- energy: Renewable energy, oil & gas, power generation, utilities, sustainability, environmental engineering
+- media: Journalism, film, TV, publishing, radio, podcasting, video production, entertainment industry
+- nonprofit: NGOs, philanthropy, social impact, humanitarian work, community organizing, volunteering
+- general_business: Business leadership, entrepreneurship, operations, management, productivity, professional development (use **only** when none of the above clearly apply)
+
+INDUSTRY DETECTION HINTS:
+- Keywords like Python, GitHub, DevOps, cloud, Kubernetes, LLMs, NVIDIA, open-source, AI, Fortnite, startup → software
+- Banking, stocks, VC, ROI, financial planning, crypto, Bloomberg, Robinhood → finance
+- Doctor, nurse, patient, clinic, medical devices, CRISPR, biotech, Moderna → healthcare
+- Campaign, Instagram, branding, storytelling, Meta Ads, influencers → marketing
+- McKinsey, Bain, "business problem", market analysis, SWOT, strategy roadmap → consulting
+- Teacher, student, university, Canvas, edtech, MOOC, academia, thesis → education
+- Robotics, manufacturing line, industrial automation, Boeing, Tesla factory → manufacturing
+- Amazon, Shopify, DTC, clothing brand, snack launch, fashion line → retail
+- Zillow, construction site, home flipping, smart cities, CAD, Revit → real_estate
+- Solar panels, wind farm, EV charging, net-zero, Exxon, green tech → energy
+- Hollywood, YouTube, documentary, podcast, screenwriting, broadcast → media
+- Red Cross, volunteering, impact report, NGO, community event → nonprofit
+
+INSTRUCTIONS:
+1. Choose **one and only one** industry from the list above.
+2. Consider **both textual and visual context** if provided (e.g., company names, tools, lingo, visuals).
+3. Be strict — prefer **specific** industries over general ones.
+4. If multiple industries seem relevant, select the **most dominant** one based on context.
+5. Use **"general_business" only as a last resort**, and only if **none** of the others clearly apply.
+6. Output only the **industry name** as listed (e.g., `software`, `finance`).
+
+INDUSTRY:"""
     
     try:
         _LOGGER.info("🤖 Calling Llama 3.3 70B for industry analysis...")
